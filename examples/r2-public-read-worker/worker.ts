@@ -148,7 +148,7 @@ async function computeResponse(request: IncomingRequestCf, env: WorkerEnv): Prom
         if (objects.delimitedPrefixes.length > 0 || objects.objects.length > 0) {
             const { cursor } = objects;
             console.log({ numPrefixes: objects.delimitedPrefixes.length, numObjects: objects.objects.length, truncated: objects.truncated, cursor });
-            return redirect ? temporaryRedirect({ location: '/' + prefix }) : new Response(computeDirectoryListingHtml(objects, { prefix, cursor, directoryListingLimitParam }), { headers: { 'content-type': TEXT_HTML_UTF8 } });
+            return redirect ? temporaryRedirect({ location: '/' + prefix }) : new Response(computeDirectoryListingHtml(objects, { prefix, cursor, directoryListingLimitParam }), { headers: { 'content-type': TEXT_HTML_UTF8, 'content-security-policy': `default-src 'none'; style-src 'unsafe-inline'`, 'x-content-type-options': 'nosniff' } });
         }
     }
 

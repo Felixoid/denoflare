@@ -18,7 +18,7 @@ export function computeDirectoryListingHtml(objects: R2Objects, opts: { prefix: 
     }
     if (cursor) {
         lines.push('<div class="full">&nbsp;</div>');
-        lines.push(`<div class="full"><a href="?${directoryListingLimitParam ? `directoryListingLimit=${directoryListingLimitParam}&` : ''}cursor=${encodeXml(cursor)}">next ➜</a></div>`);
+        lines.push(`<div class="full"><a href="${encodeXml(`?${directoryListingLimitParam ? `directoryListingLimit=${encodeURIComponent(directoryListingLimitParam)}&` : ''}cursor=${encodeURIComponent(cursor)}`)}">next ➜</a></div>`);
     }
     lines.push('</div>');
 
@@ -56,5 +56,5 @@ function computeBytesString(bytes: number): string {
 
 function computeBreadcrumbs(prefix: string): string {
     const tokens = ('/' + prefix).split('/').filter((v, i) => i === 0 || v !== '');
-    return tokens.map((v, i) => `${i === 0 ? '' : ` ⟩ `}${i === tokens.length - 1 ? (i === 0 ? 'home' : encodeXml(v)) : `<a href="${tokens.slice(0, i + 1).join('/') + '/'}">${i === 0 ? 'home' : encodeXml(v)}</a>`}`).join('');
+    return tokens.map((v, i) => `${i === 0 ? '' : ` ⟩ `}${i === tokens.length - 1 ? (i === 0 ? 'home' : encodeXml(v)) : `<a href="${encodeXml(tokens.slice(0, i + 1).join('/') + '/')}">${i === 0 ? 'home' : encodeXml(v)}</a>`}`).join('');
 }
